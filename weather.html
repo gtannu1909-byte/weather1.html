@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Portfolio of Tannu Gupta, BCA student at IGNOU learning Data Science, Python, SQL and Power BI.">
+<title>Tannu Gupta | Data Science and AI Student | Delhi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F5F6F3;
+    --ink:#16202A;
+    --muted:#657081;
+    --line:#DDE1DC;
+    --card:#FFFFFF;
+    --sky:#2F6690;
+    --sky-soft:#E4EEF3;
+    --sun:#E8A33D;
+    --rain:#6FA8D6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Space Grotesk', sans-serif;
+    min-height:100vh;
+    padding:40px 20px;
+  }
+  .app{
+    max-width:760px;
+    margin:0 auto;
+  }
+  .app-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:24px;
+  }
+  .app-head h1{
+    font-family:'Newsreader', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:1.6rem;
+  }
+  .unit-toggle{
+    display:flex;
+    border:1px solid var(--line);
+    border-radius:20px;
+    overflow:hidden;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.8rem;
+  }
+  .unit-toggle button{
+    border:none;
+    background:transparent;
+    padding:7px 14px;
+    cursor:pointer;
+    color:var(--muted);
+  }
+  .unit-toggle button.active{
+    background:var(--ink);
+    color:#fff;
+  }
+
+  .city-row{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:28px;
+  }
+  .city-pill{
+    border:1px solid var(--line);
+    background:var(--card);
+    padding:7px 16px;
+    border-radius:20px;
+    font-size:0.85rem;
+    cursor:pointer;
+    color:var(--muted);
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .city-pill.active{
+    border-color:var(--sky);
+    color:var(--sky);
+    background:var(--sky-soft);
+  }
+
+  .now-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:36px;
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:20px;
+    align-items:center;
+    margin-bottom:28px;
+  }
+  .now-left .place{
+    font-size:1.05rem;
+    color:var(--muted);
+    margin-bottom:2px;
+  }
+  .now-left .date{
+    font-size:0.85rem;
+    color:var(--muted);
+    margin-bottom:18px;
+  }
+  .now-left .condition{
+    font-family:'Newsreader', serif;
+    font-size:1.3rem;
+    font-style:italic;
+    margin-bottom:14px;
+  }
+  .meta-row{
+    display:flex;
+    gap:22px;
+    font-size:0.82rem;
+    color:var(--muted);
+    font-family:'IBM Plex Mono', monospace;
+  }
+  .meta-row span b{color:var(--ink);}
+
+  .temp-readout{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:4.4rem;
+    font-weight:500;
+    color:var(--sky);
+    line-height:1;
+    text-align:right;
+  }
+  .temp-readout sup{
+    font-size:1.6rem;
+    color:var(--muted);
+  }
+
+  .hourly{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:26px 28px 20px;
+  }
+  .hourly h2{
+    font-family:'Newsreader', serif;
+    font-weight:500;
+    font-size:1.05rem;
+    margin-bottom:20px;
+    color:var(--muted);
+  }
+  .bars{
+    display:flex;
+    align-items:flex-end;
+    gap:14px;
+    height:120px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:10px;
+  }
+  .bar-col{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-end;
+    height:100%;
+  }
+  .bar{
+    width:60%;
+    background:var(--sky-soft);
+    border-radius:3px 3px 0 0;
+    position:relative;
+    transition:height .3s ease;
+  }
+  .bar.rain{background:#DCEBF6;}
+  .bar-temp{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    color:var(--ink);
+    margin-bottom:6px;
+  }
+  .hour-labels{
+    display:flex;
+    gap:14px;
+    margin-top:10px;
+  }
+  .hour-labels span{
+    flex:1;
+    text-align:center;
+    font-size:0.72rem;
+    color:var(--muted);
+    font-family:'IBM Plex Mono', monospace;
+  }
+
+  footer{
+    text-align:center;
+    margin-top:24px;
+    font-size:0.78rem;
+    color:var(--muted);
+  }
+
+  @media (max-width:520px){
+    .now-card{grid-template-columns:1fr;text-align:left;}
+    .temp-readout{text-align:left;font-size:3.4rem;}
+    .bars{gap:8px;}
+    .hour-labels{gap:8px;}
+  }
+</style>
+</head>
+<body>
+    <h1>Tannu Gupta</h1>
+<div class="app">
+
+  <div class="app-head">
+    <h1>Weatherlog</h1>
+    <div class="unit-toggle">
+      <button id="unitC" class="active">°C</button>
+      <button id="unitF">°F</button>
+    </div>
+  </div>
+
+  <div class="city-row" id="cityRow"></div>
+
+  <div class="now-card">
+    <div class="now-left">
+      <div class="place" id="placeName">—</div>
+      <div class="date" id="dateNow">—</div>
+      <div class="condition" id="conditionText">—</div>
+      <div class="meta-row">
+        <span>Feels like <b id="feelsLike">—</b></span>
+        <span>Humidity <b id="humidity">—</b></span>
+        <span>Wind <b id="wind">—</b></span>
+      </div>
+    </div>
+    <div class="temp-readout" id="mainTemp">—<sup>°</sup></div>
+  </div>
+
+  <div class="hourly">
+    <h2>Next hours</h2>
+    <div class="bars" id="barsRow"></div>
+    <div class="hour-labels" id="hourLabels"></div>
+  </div>
+
+  <footer>Static demo data — built with HTML, CSS &amp; JavaScript</footer>
+
+</div>
+
+<script>
+  const data = {
+    Delhi: {
+      condition: "Hazy sunshine", temp: 31, feelsLike: 34, humidity: "48%", wind: "11 km/h",
+      hourly: [
+        {h:"2PM", t:31}, {h:"3PM", t:32}, {h:"4PM", t:31}, {h:"5PM", t:29},
+        {h:"6PM", t:27}, {h:"7PM", t:26}, {h:"8PM", t:25}
+      ]
+    },
+    Mumbai: {
+      condition: "Light rain", temp: 27, feelsLike: 30, humidity: "82%", wind: "18 km/h",
+      hourly: [
+        {h:"2PM", t:27, rain:true}, {h:"3PM", t:26, rain:true}, {h:"4PM", t:26, rain:true}, {h:"5PM", t:25, rain:true},
+        {h:"6PM", t:25}, {h:"7PM", t:24}, {h:"8PM", t:24}
+      ]
+    },
+    Bengaluru: {
+      condition: "Partly cloudy", temp: 24, feelsLike: 24, humidity: "60%", wind: "9 km/h",
+      hourly: [
+        {h:"2PM", t:24}, {h:"3PM", t:25}, {h:"4PM", t:24}, {h:"5PM", t:23},
+        {h:"6PM", t:22}, {h:"7PM", t:21}, {h:"8PM", t:20}
+      ]
+    },
+    Jaipur: {
+      condition: "Clear sky", temp: 34, feelsLike: 36, humidity: "30%", wind: "13 km/h",
+      hourly: [
+        {h:"2PM", t:34}, {h:"3PM", t:35}, {h:"4PM", t:34}, {h:"5PM", t:31},
+        {h:"6PM", t:28}, {h:"7PM", t:26}, {h:"8PM", t:25}
+      ]
+    }
+  };
+
+  let currentCity = "Delhi";
+  let unit = "C";
+
+  const cityRow = document.getElementById("cityRow");
+  Object.keys(data).forEach(city => {
+    const pill = document.createElement("button");
+    pill.className = "city-pill" + (city === currentCity ? " active" : "");
+    pill.textContent = city;
+    pill.onclick = () => { currentCity = city; render(); };
+    cityRow.appendChild(pill);
+  });
+
+  document.getElementById("unitC").onclick = () => { unit = "C"; render(); };
+  document.getElementById("unitF").onclick = () => { unit = "F"; render(); };
+
+  function toF(c){ return Math.round((c * 9/5) + 32); }
+  function fmt(c){ return unit === "C" ? c : toF(c); }
+
+  function render(){
+    const city = data[currentCity];
+
+    document.querySelectorAll(".city-pill").forEach(p => {
+      p.classList.toggle("active", p.textContent === currentCity);
+    });
+    document.getElementById("unitC").classList.toggle("active", unit === "C");
+    document.getElementById("unitF").classList.toggle("active", unit === "F");
+
+    document.getElementById("placeName").textContent = currentCity + ", India";
+    document.getElementById("dateNow").textContent = new Date().toLocaleDateString(undefined, {weekday:'long', month:'short', day:'numeric'});
+    document.getElementById("conditionText").textContent = city.condition;
+    document.getElementById("feelsLike").textContent = fmt(city.feelsLike) + "°" + unit;
+    document.getElementById("humidity").textContent = city.humidity;
+    document.getElementById("wind").textContent = city.wind;
+    document.getElementById("mainTemp").innerHTML = fmt(city.temp) + "<sup>°" + unit + "</sup>";
+
+    const bars = document.getElementById("barsRow");
+    const labels = document.getElementById("hourLabels");
+    bars.innerHTML = "";
+    labels.innerHTML = "";
+
+    const temps = city.hourly.map(h => h.t);
+    const min = Math.min(...temps), max = Math.max(...temps);
+
+    city.hourly.forEach(hr => {
+      const pct = max === min ? 60 : 20 + ((hr.t - min) / (max - min)) * 70;
+      const col = document.createElement("div");
+      col.className = "bar-col";
+      col.innerHTML = `
+        <div class="bar-temp">${fmt(hr.t)}°</div>
+        <div class="bar${hr.rain ? ' rain' : ''}" style="height:${pct}%"></div>
+      `;
+      bars.appendChild(col);
+
+      const lbl = document.createElement("span");
+      lbl.textContent = hr.h;
+      labels.appendChild(lbl);
+    });
+  }
+
+  render();
+</script>
+</body>
+</html>
